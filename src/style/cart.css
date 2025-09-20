@@ -1,0 +1,24 @@
+.cart-description{
+    font-size: 0.9rem;
+    color: #666;
+    height: 100px;
+    overflow:scroll;
+    overflow-x:hidden ;
+    text-overflow: ellipsis;
+}
+.cart-image{
+    height: 140px;
+    max-width: 200px;
+    
+}
+
+
+.product-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+    height: fit-content;
+    overflow:scroll;
+    overflow-x:hidden ;
+    text-overflow: ellipsis;
+}
