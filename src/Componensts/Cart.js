@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import '../style/cart.css'
 import { Card } from "react-bootstrap";
 import { addToCart, clearAll, minesFromCart, deleteFromCart } from "../rtk/slices/cart-slice";
+import { Link } from "react-router-dom";
 
 function Cart() {
     const productsCart = useSelector(state => state.cart);
@@ -13,10 +14,11 @@ function Cart() {
         acc += product.price * product.quantity;
         return acc
     }, 0)
+
     return (
         <Container className="py-5">
             <div className="py-5">
-                <Table striped>
+                <Table striped className="cart-table"  >
                     <thead>
                         <tr>
                             <th>Total Price:{totalPrice.toFixed(3)}</th>
@@ -32,26 +34,26 @@ function Cart() {
                         </tr>
                     </thead>
                     <tbody>
-                        {productsCart.map((pc) => {
+                        {productsCart.length >= 1 ? (productsCart.map((pc) => {
 
                             return (
                                 <tr key={pc.id}>
-                                    <td>Id:{pc.id}</td>
-                                    <td>
+                                    <td data-label="Id">{pc.id}</td>
+                                    <td data-label="Title">
                                         <Card.Title className="product-title">
                                             {pc.title}
                                         </Card.Title>
                                     </td>
-                                    <td>
+                                    <td data-label="Descriptoin">
                                         <Card.Text className="cart-description">{pc.description}</Card.Text>
                                     </td>
-                                    <td>
+                                    <td data-label="Image">
                                         <img className="cart-image" src={pc.image} alt="none"></img>
                                     </td>
-                                    <td>{pc.price}</td>
-                                    <td>
-                                        <InputGroup style={{ maxWidth: "260px", width: "120px" }}>
-                                            <Button
+                                    <td data-label="Price">{pc.price}</td>
+                                    <td data-label="Quantity">
+                                        <InputGroup style={{ maxWidth: "260px", width: "120px" }} className="inputGroup">
+                                            <Button className="btn"
                                                 variant="outline-danger"
                                                 onClick={() => dispatch(minesFromCart(pc))}
                                             >
@@ -62,7 +64,7 @@ function Cart() {
                                                 readOnly
                                                 className="text-center"
                                             />
-                                            <Button
+                                            <Button className="btn"
                                                 variant="outline-success"
                                                 onClick={() => dispatch(addToCart(pc))}
                                             >
@@ -70,13 +72,28 @@ function Cart() {
                                             </Button>
                                         </InputGroup>
                                     </td>
-                                    <td>
+                                    <td data-label="Actions">
                                         <Button variant={"danger"} onClick={() => { dispatch(deleteFromCart(pc)) }}>
                                             Delete
                                         </Button></td>
                                 </tr>
                             )
-                        })}
+                        }
+                        )) : productsCart.length === 0 && (
+                            <tr>
+                                <td colSpan="7" className="text-center py-5">
+                                    <div>
+                                        <h4>Your Cart is Empty 🛒</h4>
+                                        <p className="text-muted">Looks like you haven’t added anything yet.</p>
+                                        <Link to={"/products"}>
+                                            <Button variant="outline-secondary"  >
+                                                Continue Shopping
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </Table>
             </div>

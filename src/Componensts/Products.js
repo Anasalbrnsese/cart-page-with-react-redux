@@ -15,7 +15,13 @@ function Products() {
 
 
     useEffect(() => {
-        dispatch(fetchProducts());
+        const controller = new AbortController();
+        dispatch(fetchProducts(controller.signal));
+
+        return () => {
+            //cleanUp
+            controller.abort();
+        }
     }, [dispatch]);
 
     // useEffect is used for toast because JSX re-renders on state changes, causing duplicate messages

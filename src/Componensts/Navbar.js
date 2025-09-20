@@ -1,7 +1,7 @@
 import React from "react";
 import '../style/Navbar.css';
 import { Link } from "react-router-dom";
-import Logo from '../images/logo.jpg';
+import Logo from '../images/products-logo.jpg';
 import { useSelector } from "react-redux";
 
 
