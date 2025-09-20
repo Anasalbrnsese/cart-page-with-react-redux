@@ -40,11 +40,9 @@ header ul {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    border: 2px dashed snow;
-    -o-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -ms-border-radius: 6px;
-    border-radius: 6px;
-
+    -ms-border-radius:20px;
+    -o-border-radius:20px;
+    -webkit-border-radius:20px;
+    -moz-border-radius:20px;
+    border-radius:20px;
 }
