@@ -7,11 +7,20 @@ export const fetchProducts = createAsyncThunk("productsSlice/fetchProducts", asy
 
 })
 
+export const handleDelete = createAsyncThunk("productSlice/handleDelete",
+    async (id) => {
+        await fetch(`https://fakestoreapi.com/products/${id}`, {
+            method: "Delete",
+        });
+        return id;
+    }
+)
+
 export const productsSlice = createSlice({
     name: "productsSlice",
     initialState: { items: [], status: null, error: null },
     reducers: {
-        Add: (state, action) => { }
+        Add: () => { }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchProducts.fulfilled, (state, action) => {
@@ -25,6 +34,9 @@ export const productsSlice = createSlice({
         builder.addCase(fetchProducts.rejected, (state, action) => {
             state.status = "failed";
             state.error = action.error.message;
+        })
+        builder.addCase(handleDelete.fulfilled, (state, action) => {
+            state.items = state.items.filter((item) => item.id !== action.payload);
         })
     }
 })

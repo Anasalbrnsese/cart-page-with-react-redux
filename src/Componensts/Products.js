@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Container, Row, InputGroup, FormControl, Card, Button, Alert, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchProducts } from "../rtk/slices/products-slice";
+import { fetchProducts, handleDelete } from "../rtk/slices/products-slice";
 import '../style/product.css'
 import { addToCart, minesFromCart } from "../rtk/slices/cart-slice";
 import { ToastContainer, toast } from 'react-toastify';
@@ -75,15 +75,13 @@ function Products() {
                                             }
                                         </Button>
                                     </Link>
-
-                                    <Button variant="outline-danger" className="w-100 mb-2">
+                                    <Button onClick={() => dispatch(handleDelete(product.id))} variant="outline-danger" className="w-100 mb-2">
                                         Delete
                                     </Button>
                                     {(() => {
                                         const inCart = productCart.find((p) => p.id === product.id);
                                         if (inCart) {
                                             return (
-
                                                 <InputGroup style={{ maxWidth: "200px" }} className="mx-auto">
                                                     <Button
                                                         variant="outline-danger"
