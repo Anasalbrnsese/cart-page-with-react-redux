@@ -25,10 +25,10 @@ function Home() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <Link to={'/products'} className="bg-white text-black px-8 py-3 rounded-full font-semibold hover:bg-gray-200 transition-colors duration-200">
+            <Link to={'/products'} className="bg-white text-black px-8 py-3 rounded-full font-semibold transition-colors duration-200 no-underline">
               View Products
             </Link>
-            <Link className="border border-gray-700 text-white px-8 py-3 rounded-full font-semibold hover:border-gray-500 transition-colors duration-200">
+            <Link className="border border-gray-700 text-white px-8 py-3 rounded-full font-semibold transition-colors duration-200 no-underline">
               Learn More
             </Link>
           </div>

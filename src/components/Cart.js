@@ -112,7 +112,7 @@ function Cart() {
                         <div className="mt-5">
                             <Link
                                 to="/products"
-                                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition duration-200"
+                                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition duration-200 no-underline"
                             >
                                 Continue Shopping
                             </Link>

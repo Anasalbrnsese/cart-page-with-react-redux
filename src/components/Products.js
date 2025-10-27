@@ -81,7 +81,7 @@ function Products() {
                                     <div className="p-5 border-t border-zinc-800 flex flex-col gap-3">
                                         <Link
                                             to={`/products/${product.id}`}
-                                            className="text-center px-4 py-2 rounded-lg border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white font-semibold transition duration-200"
+                                            className="text-center px-4 py-2 rounded-lg border border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white font-semibold transition duration-200 no-underline"
                                         >
                                             ${displayPrice}
                                         </Link>
