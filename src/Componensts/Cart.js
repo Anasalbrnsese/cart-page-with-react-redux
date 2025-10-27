@@ -1,105 +1,127 @@
-import { Button, Container, InputGroup, FormControl } from "react-bootstrap";
-
-import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import '../style/cart.css'
-import { Card } from "react-bootstrap";
-import { addToCart, clearAll, minesFromCart, deleteFromCart } from "../rtk/slices/cart-slice";
 import { Link } from "react-router-dom";
+import { addToCart, clearAll, minesFromCart, deleteFromCart } from "../rtk/slices/cart-slice";
 
 function Cart() {
-    const productsCart = useSelector(state => state.cart);
+    const productsCart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
-    const totalPrice = productsCart.reduce((acc, product) => {
-        acc += product.price * product.quantity;
-        return acc
-    }, 0)
+
+    const totalPrice = productsCart.reduce((acc, product) => acc + product.price * product.quantity, 0);
 
     return (
-        <Container className="py-5">
-            <div className="py-5">
-                <Table striped className="cart-table"  >
-                    <thead>
-                        <tr>
-                            <th>Total Price:{totalPrice.toFixed(3)}</th>
-                        </tr>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Image</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {productsCart.length >= 1 ? (productsCart.map((pc) => {
+        <div className="min-h-screen bg-black text-white py-20 px-6">
+            <div className="max-w-6xl mx-auto">
+                <h1 className="text-4xl md:text-5xl font-bold text-center mb-10">
+                    Your <span className="text-blue-400">Cart</span>
+                </h1>
 
-                            return (
-                                <tr key={pc.id}>
-                                    <td data-label="Id">{pc.id}</td>
-                                    <td data-label="Title">
-                                        <Card.Title className="product-title">
-                                            {pc.title}
-                                        </Card.Title>
-                                    </td>
-                                    <td data-label="Descriptoin">
-                                        <Card.Text className="cart-description">{pc.description}</Card.Text>
-                                    </td>
-                                    <td data-label="Image">
-                                        <img className="cart-image" src={pc.image} alt="none"></img>
-                                    </td>
-                                    <td data-label="Price">{pc.price}</td>
-                                    <td data-label="Quantity">
-                                        <InputGroup style={{ maxWidth: "260px", width: "120px" }} className="inputGroup">
-                                            <Button className="btn"
-                                                variant="outline-danger"
-                                                onClick={() => dispatch(minesFromCart(pc))}
-                                            >
-                                                -
-                                            </Button>
-                                            <FormControl
-                                                value={pc.quantity}
-                                                readOnly
-                                                className="text-center"
-                                            />
-                                            <Button className="btn"
-                                                variant="outline-success"
-                                                onClick={() => dispatch(addToCart(pc))}
-                                            >
-                                                +
-                                            </Button>
-                                        </InputGroup>
-                                    </td>
-                                    <td data-label="Actions">
-                                        <Button variant={"danger"} onClick={() => { dispatch(deleteFromCart(pc)) }}>
-                                            Delete
-                                        </Button></td>
-                                </tr>
-                            )
-                        }
-                        )) : productsCart.length === 0 && (
-                            <tr>
-                                <td colSpan="7" className="text-center py-5">
-                                    <div>
-                                        <h4>Your Cart is Empty 🛒</h4>
-                                        <p className="text-muted">Looks like you haven’t added anything yet.</p>
-                                        <Link to={"/products"}>
-                                            <Button variant="outline-secondary"  >
-                                                Continue Shopping
-                                            </Button>
-                                        </Link>
-                                    </div>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </Table>
+                {productsCart.length > 0 ? (
+                    <>
+                        {/* Cart Table */}
+                        <div className="overflow-x-auto border border-zinc-800 rounded-xl shadow-lg">
+                            <table className="min-w-full text-sm md:text-base">
+                                <thead className="bg-zinc-900/70 border-b border-zinc-800 text-gray-300 uppercase text-xs">
+                                    <tr>
+                                        <th className="px-4 py-3 text-left">#</th>
+                                        <th className="px-4 py-3 text-left">Title</th>
+                                        <th className="px-4 py-3 text-left">Description</th>
+                                        <th className="px-4 py-3 text-center">Image</th>
+                                        <th className="px-4 py-3 text-center">Price</th>
+                                        <th className="px-4 py-3 text-center">Quantity</th>
+                                        <th className="px-4 py-3 text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {productsCart.map((pc, i) => (
+                                        <tr
+                                            key={pc.id}
+                                            className="border-b border-zinc-800 hover:bg-zinc-900 transition-colors duration-200"
+                                        >
+                                            <td className="px-4 py-4 text-gray-400">{i + 1}</td>
+                                            <td className="px-4 py-4 font-semibold">{pc.title}</td>
+                                            <td className="px-4 py-4 text-gray-400 max-w-xs truncate">{pc.description}</td>
+                                            <td className="px-4 py-4 text-center">
+                                                <img
+                                                    src={pc.image}
+                                                    alt={pc.title}
+                                                    className="w-16 h-16 object-contain mx-auto rounded-lg border border-zinc-800"
+                                                />
+                                            </td>
+                                            <td className="px-4 py-4 text-center text-blue-400 font-semibold">
+                                                ${pc.price.toFixed(2)}
+                                            </td>
+                                            <td className="px-4 py-4 text-center">
+                                                <div className="inline-flex items-center gap-2">
+                                                    <button
+                                                        onClick={() => dispatch(minesFromCart(pc))}
+                                                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-red-600/20 hover:bg-red-600/40 text-red-400 text-lg"
+                                                    >
+                                                        -
+                                                    </button>
+                                                    <span className="min-w-[30px]">{pc.quantity}</span>
+                                                    <button
+                                                        onClick={() => dispatch(addToCart(pc))}
+                                                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-green-600/20 hover:bg-green-600/40 text-green-400 text-lg"
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-4 text-center">
+                                                <button
+                                                    onClick={() => dispatch(deleteFromCart(pc))}
+                                                    className="px-4 py-2 rounded-lg bg-red-600/20 hover:bg-red-600/40 text-red-400 font-semibold transition duration-200"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* Summary + Actions */}
+                        <div className="flex flex-col sm:flex-row justify-between items-center mt-10 gap-4">
+                            <div className="text-lg text-gray-300">
+                                Total:{" "}
+                                <span className="text-white font-bold">${totalPrice.toFixed(2)}</span>
+                            </div>
+
+                            <div className="flex gap-4">
+                                <Link
+                                    to="/products"
+                                    className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg font-semibold text-white transition duration-200"
+                                >
+                                    Continue Shopping
+                                </Link>
+                                <button
+                                    onClick={() => dispatch(clearAll())}
+                                    className="border border-red-500 hover:bg-red-600 hover:text-white text-red-400 px-6 py-2 rounded-lg font-semibold transition duration-200"
+                                >
+                                    Clear Cart
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    // Empty Cart
+                    <div className="text-center py-20 space-y-4">
+                        <h2 className="text-3xl font-bold text-gray-200">Your Cart is Empty 🛒</h2>
+                        <p className="text-gray-400">Looks like you haven’t added anything yet.</p>
+                        <div className="mt-5">
+                            <Link
+                                to="/products"
+                                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition duration-200"
+                            >
+                                Continue Shopping
+                            </Link>
+                        </div>
+                    </div>
+                )}
             </div>
-            <Button variant="outline-danger" onClick={() => { dispatch(clearAll()) }}>Clear Cart</Button>
-        </Container>
-    )
-
+        </div>
+    );
 }
+
 export default Cart;

@@ -32,11 +32,6 @@
 
 /* Mobile: stack cells vertically */
 @media (max-width: 768px) {
-    .cart-table thead {
-        display: none;
-        /* hide table headers */
-    }
-
     .cart-table tbody,
     .cart-table tr,
     .cart-table td {
