@@ -22,8 +22,8 @@ function Navbar() {
                 </Link>
 
                 {/* Navigation Links */}
-                <nav>
-                    <ul className="flex items-center gap-8 text-gray-700 dark:text-gray-200 font-medium">
+                <nav className="flex items-center">
+                    <ul className="flex items-center gap-8 m-0 p-0 text-gray-700 dark:text-gray-200 font-medium">
                         <li>
                             <Link
                                 to="/home"
