@@ -5,9 +5,9 @@ import { addToCart, clearAll, minesFromCart, deleteFromCart } from "../rtk/slice
 function Cart() {
     const productsCart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
-
     const totalPrice = productsCart.reduce((acc, product) => acc + product.price * product.quantity, 0);
 
+ 
     return (
         <div className="min-h-screen bg-black text-white py-20 px-6">
             <div className="max-w-6xl mx-auto">
@@ -89,6 +89,12 @@ function Cart() {
                             </div>
 
                             <div className="flex gap-4">
+                                <Link
+                                    to="/checkout"
+                                    className="border border-green-500 hover:bg-green-600 hover:text-white text-green-400 px-6 py-2 rounded-lg font-semibold transition duration-200"
+                                >
+                                    Checkout
+                                </Link>
                                 <Link
                                     to="/products"
                                     className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg font-semibold text-white transition duration-200"
